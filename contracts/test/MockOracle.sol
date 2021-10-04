@@ -45,9 +45,7 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
    * @dev Sets the LinkToken address for the imported LinkTokenInterface
    * @param _link The address of the LINK token
    */
-  constructor(
-    address _link
-  )
+  constructor(address _link)
     public
   {
     LinkToken = LinkTokenInterface(_link); // external but already deployed and unalterable
@@ -118,9 +116,7 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
   )
     external
     isValidRequest(_requestId)
-    returns (
-      bool
-    )
+    returns (bool)
   {
     Request memory req = commitments[_requestId];
     delete commitments[_requestId];
@@ -169,9 +165,7 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
     public
     view
     override
-    returns (
-      address
-    )
+    returns (address)
   {
     return address(LinkToken);
   }
@@ -182,9 +176,7 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
    * @dev Reverts if request ID does not exist
    * @param _requestId The given request ID to check in stored `commitments`
    */
-  modifier isValidRequest(
-    bytes32 _requestId
-  ) {
+  modifier isValidRequest(bytes32 _requestId) {
     require(commitments[_requestId].callbackAddr != address(0), "Must have a valid requestId");
     _;
   }
@@ -194,9 +186,7 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
    * @dev Reverts if the callback address is the LINK token
    * @param _to The callback address
    */
-  modifier checkCallbackAddress(
-    address _to
-  ) {
+  modifier checkCallbackAddress(address _to) {
     require(_to != address(LinkToken), "Cannot callback to LINK");
     _;
   }
